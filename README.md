@@ -1,4 +1,4 @@
-# metal-examples
+# meta-lang-examples
 
 https://language.metaproject.frl
 
