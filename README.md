@@ -49,7 +49,7 @@ Plus they are extremely tiny!
 VSZ RSS COMMAND
 ```
 
-*I don't accept Justine's political bias, nor associate myself with the human or its corporate/flesh associates, or any of its beliefs, views, comments & opinions. I simply use a language that uses a brilliant piece of technological artistry.*
+*I don't accept Justine's political bias, nor associate myself with the human or its corporate/flesh associates, or any of its beliefs, views, comments & opinions. I simply use a language that uses a brilliant piece of technological artistry developed by an amazing soul.*
 
 ## Get Compiler Client
 
