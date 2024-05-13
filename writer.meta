@@ -6,7 +6,7 @@ exit: false
 
 filename: ask/line "Save As: "
 folder: "./"
-extension: ".mw"
+extension: ".txt"
 
 file-saved: to file! join/with
 		     join/with folder filename extension
@@ -14,12 +14,10 @@ file-saved: to file! join/with
 file-handle= try open/new file-saved
 
 until exit [
-	line: ask/line "> "
-	if line = "eof" [close file-handle 
+	line: join/with ask/line "> " "^/"
+	if line = "eof^/" [close file-handle 
 			exit: true	
 			bye
 	]
-
-	newline: join/with line "^/"
-	append file-handle newline
+	append file-handle line
 ]
