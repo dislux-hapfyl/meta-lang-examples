@@ -1,5 +1,8 @@
 # meta-lang-examples
 
+Discuss: https://matrix.to/#/#meta:gitter.im
+
+# Meta **αpε**
 `looper` & `writer` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
 
 In other words Meta compiles to an **αpε**
