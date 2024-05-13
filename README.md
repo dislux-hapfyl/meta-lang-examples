@@ -68,7 +68,7 @@ Outputs executable: `program.com`
 
 # Meta
 
-Meta is being created by Kaj de Vos, with help from its community.
+Meta is being created by Kaj de Vos, with help from its community. The following are his words:
 
 https://language.metaproject.frl
 
