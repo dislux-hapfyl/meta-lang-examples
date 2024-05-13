@@ -1,0 +1,21 @@
+Meta [ 
+	title: "Meta Line Writer"
+	file: ./writer.meta
+]
+
+filename: ask/line "Save As: "
+folder: "./"
+extension: ".mw"
+file-saved: to file! join/with join/with folder filename extension
+ 
+exit: false
+file-handle= try open/new file-saved
+until exit [
+line: ask/line "> "
+if line = "eof" [close file-handle 
+		exit: true	
+		bye
+]
+newline: join/with line "^/"
+append file-handle newline
+]
