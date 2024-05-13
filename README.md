@@ -2,7 +2,7 @@
 
 `looper` & `writer` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
 
-*I don't accept Justine's political bias, associate myself with her or associates and any of her personal, technical views & opinions. I simply use a language that uses her software which is brilliant.*
+*I don't accept Justine's political bias, nor associate myself with her or associates and any of her personal, technical views, comments & opinions. I simply use a language that uses her software which is brilliant.*
 
 In other words Meta Lang compiles to an APE.
 
