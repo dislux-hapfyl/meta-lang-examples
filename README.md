@@ -35,6 +35,14 @@ until exit [
 	append file-handle line
 ]
 
+; or MORE CONCISE
+; until exit [
+;	line: ask/line "> "
+;	if line = "eof" [close file-handle 
+;			exit: true	
+;			bye
+;	]
+;	append/line file-handle line]
 
 ```
 
