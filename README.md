@@ -1,6 +1,6 @@
 # meta-lang-examples
 
-Discuss: https://matrix.to/#/#meta:gitter.im
+Discuss: https://social.metaproject.frl/Meta/
 
 # Meta **αpε**
 `looper.com` & `writer.com` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
