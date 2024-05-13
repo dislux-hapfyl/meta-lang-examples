@@ -17,7 +17,7 @@ Plus they are extremely tiny!
 356 0 ./writer
 VSZ RSS COMMAND
 ```
-### Get Remote APE Meta Compiler
+### Get Compiler Client
 
 Download:
 `https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com`
