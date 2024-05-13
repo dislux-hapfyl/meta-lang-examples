@@ -19,6 +19,10 @@ VSZ RSS COMMAND
 ```
 ### Get Compiler Client
 
+Check out the console:
+
+https://console.metaproject.frl/
+
 The compiler client is currently available for web browsers, Windows, Apple MacOS, Linux, FreeBSD, NetBSD and OpenBSD.
 
 The compiler currently produces programs for web browsers, PC platforms and for Atari 8-bit home computers. Stay tuned for more.
