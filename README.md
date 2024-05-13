@@ -17,7 +17,8 @@ filename: ask/line "Save As: "
 folder: "./"
 extension: ".mw"
 
-file-saved: to file! join/with join/with folder filename extension
+file-saved: to file! join/with
+		     join/with folder filename extension
  
 file-handle= try open/new file-saved
 
