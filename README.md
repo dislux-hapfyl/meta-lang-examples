@@ -17,7 +17,7 @@ Plus they are extremely tiny!
 356 0 ./writer
 VSZ RSS COMMAND
 ```
-To compile locally:
+### Get Remote Meta Compiler
 
 Download:
 `https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com`
