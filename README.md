@@ -247,7 +247,7 @@ Introduce the project to more audiences.
 
 Build an inclusive community, where anyone with good intentions can feel welcome.
 
-Medium Term
+### Medium Term
 
 Release Meta for many target and host platforms to grow the user base.
 
@@ -255,7 +255,7 @@ Create a crowd-funding system using Meta, to fund the project and let users infl
 
 Develop paid premium products and services to sustain the business model.
 
-Long Term
+### Long Term
 
 Develop Meta further to implement REBOL's higher-level and dynamic features, and interface with external systems and libraries. Within these design and dependency constraints, there is a lot of room to let the crowd funding inspire the planning.
 
