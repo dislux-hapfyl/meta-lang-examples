@@ -37,17 +37,16 @@ Is Meta usable for you yet? That depends on your use case and your attitude. Met
 Many of the current limitations can be worked around, and Meta will still reward you with outstanding results. The language is incomplete, but compiled programs are of production quality, blazingly fast, efficient and with few dependencies - unless you need garbage collection of memory for long-running programs.
 
 If you need support, contact us for consulting or contract development.
-Supported Platforms
 
-Climbing over fences of walled gardens
+## Supported Platforms
 
--Web Browsers
--PC (Personal Computer / Laptop / Server)
--Smart Phones & Tablets
--Game Consoles & Handhelds
--Embedded Systems
--Home Computers
--Mainframes
+- Web Browsers   
+- PC (Personal Computer / Laptop / Server)
+- Smart Phones & Tablets
+- Game Consoles & Handhelds 
+- Embedded Systems
+- Home Computers
+- Mainframes
 
 Meta is being developed on 64-bit Linux. In-house we have preliminary test programs written in Meta running on several other platforms and sub-platforms. So far, a compiler for web browsers and multiple computer platforms, and a cross compiler for Atari 8-bit home computers through the C back-end have been released. Stay tuned for more.
 
