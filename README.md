@@ -26,13 +26,15 @@ file-saved: to file! join/with
 file-handle= try open/new file-saved
 
 until exit [
-	line: join/with ask/line "> " "^/"
+	line: join/with ask/line "> " {
+} 					;-- equivalent to "^/" OR \n in other languages
 	if line = "eof^/" [close file-handle 
 			exit: true	
 			bye
 	]
 	append file-handle line
 ]
+
 
 ```
 
