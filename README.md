@@ -6,6 +6,33 @@ In other words Meta Lang compiles to an APE.
 
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
 
+```
+Meta [ 
+	title: "Meta Line Writer"
+	file: ./writer.meta
+]
+exit: false
+
+filename: ask/line "Save As: "
+folder: "./"
+extension: ".mw"
+
+file-saved: to file! join/with join/with folder filename extension
+ 
+file-handle= try open/new file-saved
+
+until exit [
+	line: ask/line "> "
+	if line = "eof" [close file-handle 
+			exit: true	
+			bye
+	]
+
+	newline: join/with line "^/"
+	append file-handle newline
+]
+```
+
 Plus they are extremely tiny!
 
 ```
