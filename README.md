@@ -4,7 +4,7 @@
 
 *I don't accept Justine's political bias, nor associate myself with him or associates, or any of his beliefs, views, comments & opinions. I simply use a language that uses a brilliant piece of technological artistry.*
 
-In other words Meta Lang compiles to an APE.
+In other words Meta compiles to an APE.
 
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
 
