@@ -2,6 +2,8 @@
 
 `looper` & `writer` are APEs. https://justine.lol/ape.html
 
+In other words Meta Lang compiles to an APE.
+
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
 
 Plus they are extremely tiny!
