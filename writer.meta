@@ -14,10 +14,10 @@ file-saved: to file! join/with
 file-handle= try open/new file-saved
 
 until exit [
-	line: join/with ask/line "> " "^/"
-	if line = "eof^/" [close file-handle 
+	line: ask/line ">"
+	if line = "eof" [close file-handle 
 			exit: true	
 			bye
 	]
-	append file-handle line
+	append/line file-handle line
 ]
