@@ -1,5 +1,7 @@
 # meta-lang-examples
 
+Meta is being created by Kaj de Vos, with help from its community.
+
 https://language.metaproject.frl
 
 In spirit, Meta is a descendant of the REBOL and Logo languages, but with performance close to C. Meta is mostly inspired by REBOL. It is not meant to be compatible with REBOL, but it will eventually be quite close. However, it is not complete yet, and there are many subtle differences to optimise the language and extend its reach.
