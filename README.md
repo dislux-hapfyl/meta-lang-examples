@@ -2,6 +2,11 @@
 
 `looper` & `writer` are APEs. https://justine.lol/ape.html
 
+Plus they are extremely tiny!
+
+`ps aux= 32918  0.0  0.0    528   128 pts/0    S+   21:21   0:00 ./looper`
+
+
 # Meta
 
 Meta is being created by Kaj de Vos, with help from its community.
