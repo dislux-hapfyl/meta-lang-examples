@@ -4,7 +4,13 @@
 
 Plus they are extremely tiny!
 
-`ps aux= 32918  0.0  0.0    528   128 pts/0    S+   21:21   0:00 ./looper`
+```
+3164 2048 /usr/sbin/mcelog
+2540 1792 fusermount3
+528 128 ./looper
+VSZ RSS COMMAND
+mzmz@fedora:~$  ps aux | awk '{ print $5" "$6" "$11 }' | sort -nr
+```
 
 
 # Meta
