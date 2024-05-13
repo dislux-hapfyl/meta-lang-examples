@@ -2,7 +2,7 @@
 
 `looper` & `writer` are APEs. https://justine.lol/ape.html
 
-`writer` supports terminal pasting. Under Terminology I can paste any amount of text and save it with no issues.
+`writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
 
 Plus they are extremely tiny!
 
