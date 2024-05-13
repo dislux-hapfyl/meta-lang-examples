@@ -3,7 +3,7 @@
 Discuss: https://matrix.to/#/#meta:gitter.im
 
 # Meta **αpε**
-`looper` & `writer` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
+`looper.com` & `writer.com` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
 
 In other words Meta compiles to an **αpε**
 
