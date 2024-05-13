@@ -2,8 +2,6 @@
 
 `looper` & `writer` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
 
-*I don't accept Justine's political bias, nor associate myself with him or associates, or any of his beliefs, views, comments & opinions. I simply use a language that uses a brilliant piece of technological artistry.*
-
 In other words Meta compiles to an **αpε**
 
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
@@ -47,11 +45,12 @@ Plus they are extremely tiny!
 356 0 ./writer
 VSZ RSS COMMAND
 ```
-### Get Compiler Client
 
-Check out the console:
+*I don't accept Justine's political bias, nor associate myself with him or associates, or any of his beliefs, views, comments & opinions. I simply use a language that uses a brilliant piece of technological artistry.*
 
-https://console.metaproject.frl/
+## Get Compiler Client
+
+Check out the console: https://console.metaproject.frl/
 
 The compiler client is currently available for web browsers, Windows, Apple MacOS, Linux, FreeBSD, NetBSD and OpenBSD.
 
@@ -60,9 +59,9 @@ The compiler currently produces programs for web browsers, PC platforms and for 
 Download:
 `https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com`
 
-`chmod +x run.com ; mv run.com metacc`
+*nix:
 
-Do the equivalent in Windows. APEs running everywhere.
+`chmod +x run.com ; mv run.com metacc` *Do the equivalent in Windows.*
 
 `./metacc writer.meta`
 
