@@ -208,11 +208,6 @@ Build an inclusive community, where anyone with good intentions can feel welcome
 
 ### Road Map
 
-    Done
-    In Progress
-    Medium Term
-    Long Term
-
 Current priorities, in order. Because much depends on support from the community and funding by organisations, there is no time schedule for these developments. We can implement specific wishes when there is funding for them. In times when there is no funding, we will follow our own priorities, which usually follow the low-hanging fruit. If you need guarantees on certain features and their planning, contact us for contract work.
 Done
 
