@@ -118,6 +118,12 @@ If you need support, contact us for consulting or contract development.
 
 Meta is being developed on 64-bit Linux. In-house we have preliminary test programs written in Meta running on several other platforms and sub-platforms. So far, a compiler for web browsers and multiple computer platforms, and a cross compiler for Atari 8-bit home computers through the C back-end have been released. Stay tuned for more.
 
+The Atari 2600 was one of the first game consoles. It has 128 bytes of RAM and an 8-bit processor running slightly over 1 MHz. It shows that the language is fast enough to "race the beam": to draw the television display scanline by scanline in real-time, hundreds of scanlines 50 to 60 times per second. It proves that Meta can target very small devices, can use native system features, and can run on bare hardware, without an operating system.
+
+The Atari 8-bit was Atari's first personal/home computer system, follow-up to the Atari 2600. It is a complete platform, including an operating system, in a very compact and efficient form. It proves that Meta can achieve a high level of platform abstraction, by running cross-platform programs unchanged on anything from Atari 8-bit to 64-bit PC's.
+
+The C back-ends use a C toolchain for the platform, to be able to target a broad range of platforms. The native back-ends generate machine code directly, without relying on a third-party toolchain, in the executable binary program format for the platform. The native back-ends reduce Muda compared to the C back-ends. They prove that Meta can be more efficient and less wasteful than C, both in the generated programs and the toolchain. On the other hand, the native back-ends require more work per platform for us to implement them, so the cross-platform C back-end is currently the most developed.
+
 ## Goals
 
 Several of these goals have been achieved, most are in progress.
@@ -199,6 +205,80 @@ Gradually open-source the base products, once the funding allows it. So far, we 
 Have fun creating Meta. It's a huge task, so we need to keep ourselves motivated to accomplish it.
 
 Build an inclusive community, where anyone with good intentions can feel welcome, to help us achieve it.
+
+### Road Map
+
+    Done
+    In Progress
+    Medium Term
+    Long Term
+
+Current priorities, in order. Because much depends on support from the community and funding by organisations, there is no time schedule for these developments. We can implement specific wishes when there is funding for them. In times when there is no funding, we will follow our own priorities, which usually follow the low-hanging fruit. If you need guarantees on certain features and their planning, contact us for contract work.
+Done
+
+Developed Meta into a Minimum Viable Product. This will be a base language with approximately the feature set and type system of medium-level languages such as C and Pascal in a safe form, made friendlier by a high-level REBOL-like syntax.
+
+Developed a web download server written in Meta itself, to support the project and develop the language.
+
+Introduced the project to the Atari 8-bit scene as a suitable grass-roots audience, to start a feedback process.
+
+Created a project website, served by Meta.
+
+Introduced the project to the REBOL audience, Meta's predecessor.
+
+Developed an Internet build server and client written in Meta, for easy and continuous deployment of the language.
+
+Launched the language as a cross compiler on PC to Atari 8-bit, a suitable combination of target and host platform to make a start.
+
+Released the language for popular PC platforms themselves.
+
+Released the language for web browsers, for even easier entry and coverage of more platforms.
+
+Developed a custom forum system for the project, using Meta itself and served by Meta.
+
+Introduced the project to the αcτµαlly pδrταblε εxεcµταblε & Cosmopolitan community, which we support as a target runtime.
+
+Brought the project to the new Bluesky social network [Bluesky social network] .
+
+Made the language available for ARM, mobile, embedded, mainframe, 32-bit and other alternative or older systems, through the new Blink virtual machine.
+
+### In Progress
+
+Incrementally improve the language, build services, documentation and program examples from the feedback of their use.
+
+Use Meta for tasks in other projects.
+
+Introduce the project to more audiences.
+
+Build an inclusive community, where anyone with good intentions can feel welcome.
+
+Medium Term
+
+Release Meta for many target and host platforms to grow the user base.
+
+Create a crowd-funding system using Meta, to fund the project and let users influence priorities.
+
+Develop paid premium products and services to sustain the business model.
+
+Long Term
+
+Develop Meta further to implement REBOL's higher-level and dynamic features, and interface with external systems and libraries. Within these design and dependency constraints, there is a lot of room to let the crowd funding inspire the planning.
+
+Gradually modularise Meta more to open up the project to outside contributions.
+
+When Meta is capable enough, rewrite it from REBOL into itself.
+
+Gradually open-source more of the project's program source code.
+
+Because of its nature of making use of third-party open-source products, the server side of the product is hard to install and maintain. We will work towards a simpler version that can run independently on your local machine. This will take considerable work and time to achieve, and because of technical necessity, it will have limitations compared to the full product.
+
+The audience chosen for early introduction are the Atari 8-bit and Atari 2600 communities, because these small machines are a good start to build on. They are easier to work for than modern platforms due to less complexity, and keep you aware of efficiency: these platforms hardly tolerate Muda. They provide meaningful results earlier: the Minimum Viable Product is smaller for a small platform.
+
+The target platform chosen for the first release was the Atari 8-bit based on the CC65 back-end. This is a small but complete platform that can show all current features of Meta. CC65 is a standards-compliant but relatively basic C implementation, making it a good baseline for the C back-end. Code generated for CC65 is likely to work with most other C compilers and cross-platform C libraries. The Atari community is helping with Meta's development, so we want to show our appreciation.
+
+There will always be a free version of Meta. We will build a business on top of it, by offering paid premium versions and other products built with Meta.
+
+To grow the project, we very much want to release Meta as open source under a permissive licence, eventually. However, a number of criteria need to be met before that is prudent. The current implementation is written in REBOL. Once Meta is capable enough, we will rewrite it in itself. The REBOL version will then no longer be maintained, and open-sourcing a code base without maintaining it is futile. Further, we need to develop premium products to sustain the business model, before we can give away the core products for free. This will be a gradual process. So far, we open-source everything that runs on your local machine: the remote compiler client, the sample programs, the web console client and the forum client web application. As we develop more products, more of the base products can be open-sourced. We will also gradually open up the project to outside contributions, when it makes sense.
 
 ## Features
 
