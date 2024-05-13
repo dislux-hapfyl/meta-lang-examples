@@ -1,6 +1,6 @@
 # meta-lang-examples
 
-`looper` & `writer` are αcτµαlly pδrταblε εxεcµταblε. https://justine.lol/ape.html
+`looper` & `writer` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
 
 In other words Meta Lang compiles to an APE.
 
