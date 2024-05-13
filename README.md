@@ -60,9 +60,11 @@ Download:
 
 `chmod +x run.com ; mv run.com metacc`
 
+Do the equivalent in Windows. APEs running everywhere.
+
 `./metacc writer.meta`
 
-Do the equivalent in Windows. APEs running everywhere.
+Outputs executable: `program.com`
 
 # Meta
 
