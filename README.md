@@ -277,4 +277,4 @@ The compiler currently produces programs for web browsers, PC platforms and for 
 
 https://language.metaproject.frl
 
-#allerrorsmatter #cod-ape #meta-cod #cod-meta
+#meta-lang #allerrorsmatter #cod-ape #meta-cod #cod-meta
