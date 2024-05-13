@@ -1,0 +1,130 @@
+Meta [
+	title: "More Examples"
+        purpose: {Original Code from:
+             https://arnoldvanhofwegen.com/the/unofficial/meta/examples.html }
+	file: ./loop.meta
+]
+forever [
+        x: ask/line "> "
+	if x = "" [bye]
+	;comments
+        ;chars: count x
+	;write x write/line " =Input" 
+	;write chars write/line " characters"
+
+	if x = "help" [write "Commands: " write/line "calc help caps game board"]
+
+	if x = "calc" [
+		result: 1
+		n: 4
+		while n > 1 [
+    			result: result * n
+			write/line result 
+    			decrement n
+		]
+	]
+
+	if x = "caps" [
+	string: (ask/line "CAPITALIZE: ")
+	lower-characters: "abcdefghijklmnopqrstuvwxyz"
+	upper-characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	upper-string: ""
+	lower-string: ""
+	length: count string
+	for index [1 length][
+    		lowchar: upchar: copy cut at string index 1
+    		either found: find lower-characters lowchar [
+        			upchar: copy cut at upper-characters (27 - (count found)) 1
+    		][
+			if found: find upper-characters upchar [
+            				lowchar: copy cut at lower-characters (27 - (count found)) 1
+        		    ]
+    		]
+    		upper-string: join/with upper-string upchar
+    		lower-string: join/with lower-string lowchar
+	]
+		write/line upper-string
+	]
+
+	if x = "game" [
+		write/line "Welcome to the Game of Nim."
+		tokens: to whole! ask/line "Tokens? "
+		write "We begin with " write tokens
+		
+		write/line " tokens. On each turn, a player"
+		write/line "may take between 1 and 3 tokens. The player who takes the"
+		write/line "last token wins."
+		write/line ""
+
+		while tokens > 0 [
+    			write "Available tokens: " write/line tokens
+    			; provide a visual display
+    			for index [1 tokens][
+        				write "⛀ ";
+    			]
+    			write new-line
+    			answer: ask/line "How many tokens do you want to take (1, 2 or 3)?"
+    			write/line ""
+    			removed: to whole! answer
+    			write "You have taken " write removed write/line " token(s)"
+
+    			tokens: tokens - removed
+    			computertakes: modulo tokens 4
+    			write "Computer takes " write computertakes write/line " token(s)"
+    			tokens: tokens - computertakes
+		]
+		wait 1
+		write/line "No more tokens left! I took the last one! I won!"
+		wait 1
+		write/line "Thank you for playing! Let's play again!"
+	]
+
+	if x = "board" [
+		BOARD-SIZE= 50
+		Let [board] binary! BOARD-SIZE
+
+		For index [1 BOARD-SIZE][
+		    poke board index 0
+		]
+
+		for index [1 20][
+		    poke board index 3
+		    poke board (index + 30) 2
+		]
+
+		poke board 3 5
+		poke board 48 4
+
+		write/line ""
+		for row [1 10][
+   			write either is-odd row ["  "][""]
+    			for line [1 5][
+        				field: pick board (row - 1 * 5 + line)
+        				either 0 = field [
+            					write "▨"
+        				][
+            					either 2 = field [
+                						write "⛀"
+            					][
+                						either 3 = field [
+                    							write "⛂"
+                						][
+                    							either 4 = field [
+                        								write "⛁"
+                    							][
+                        								write "⛃"
+                    							]
+                						]
+            					]
+        				]
+        				write "   "
+    			]
+    			write/line ""
+		]
+		write/line ""
+		]
+
+
+]	
+
+
