@@ -2,6 +2,8 @@
 
 `looper` & `writer` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
 
+*I dont accept the Justine's political views nor associate myself with any of her personal nor technical views nor opinions nor ideas. I simply use a language that uses her software*
+
 In other words Meta Lang compiles to an APE.
 
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
