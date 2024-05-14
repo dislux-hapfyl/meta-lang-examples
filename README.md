@@ -10,7 +10,7 @@ In other words Meta compiles to an **αpε**
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
 
 ```
-Meta [ 
+Meta [
 	title: "Meta Line Writer"
 	file: ./writer.meta
 ]
@@ -19,31 +19,33 @@ exit: false
 filename: ask/line "Save As: "
 folder: "./"
 extension: ".txt"
+line-number: 1
+word-count: 0
 
 file-saved: to file! join/with
-		     join/with folder filename extension
- 
+	             join/with folder filename extension
+
 file-handle= try open/new file-saved
 
 until exit [
-	line: join/with ask/line "> " {
-} 					;-- equivalent to "^/" OR \n in other languages
-	if line = "eof^/" [close file-handle 
-			exit: true	
-			bye
+	write line-number
+	line: ask/line "> "
+	if line = "eof" [close file-handle
+		                exit: true
+		                bye
 	]
-	append file-handle line
+	append/line file-handle line
+	increment line-number
+	line-left: line
+	while line-left [
+	        line-left: find line " "
+	        a-word: (count line) - (count line-left)
+	        increment word-count
+	        line: skip line a-word + 1
+	]
+	write join/with join/with "wc " to string! word-count " | "
+	word-count: 0
 ]
-
-; or MORE CONCISE
-; until exit [
-;	line: ask/line "> "
-;	if line = "eof" [close file-handle 
-;			exit: true	
-;			bye
-;	]
-;	append/line file-handle line]
-
 ```
 
 ```
