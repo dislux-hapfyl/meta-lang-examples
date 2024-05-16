@@ -9,7 +9,7 @@ In other words Meta compiles to an **αpε**
 
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
 
-```
+```rebol
 Meta [
 	title: "Meta Line Writer"
 	file: ./writer.meta
@@ -48,7 +48,7 @@ until exit [
 ]
 ```
 
-```
+```rebol
 Meta [
 	title: "More Examples"
         purpose: {Original Code from:
