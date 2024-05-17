@@ -1,0 +1,21 @@
+Meta [
+	file: ./rat.meta
+	purpose: "Rudimentary 'cat' clone"]
+
+either argument= first-of system/program/ins [
+][
+    write/line "Argument must be a file!"
+    bye
+]
+
+file: to file! join/with "./" argument
+
+either handler= try open file [
+	until (is-tail handler)[
+		line: to string! take/line handler
+		write/line line
+	]
+	close handler
+][
+	bye
+]
