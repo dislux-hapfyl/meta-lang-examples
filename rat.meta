@@ -8,12 +8,11 @@ either argument= first-of system/program/ins [
     bye
 ]
 
-file: to file! join/with "./" argument
+file: to-universal-file argument
 
 either handler= try open file [
 	until (is-tail handler)[
-		line: to string! take/line handler
-		write/line line
+	        write/line take/line handler
 	]
 	close handler
 ][
