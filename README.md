@@ -8,7 +8,9 @@ Try: https://console.metaproject.frl
 
 Download: https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com
 
-*nix: `chmod +x run.com ; mv run.com metacc` To Compile: `./metacc program-name.meta` Outputs αpε: `program.com`
+*nix: `chmod +x run.com ; mv run.com metacc` To Compile: `./metacc program-name.meta` 
+
+Outputs αpε: `program.com`
 
 *Do the equivalent in Windows. NOTE: Winblows complains that this is a virus*
 
