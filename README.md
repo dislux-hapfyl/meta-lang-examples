@@ -1,6 +1,10 @@
 # meta-lang-examples
 
-Website: https://language.metaproject.frl |%| Forum: https://social.metaproject.frl/Meta/ |%| Try: https://console.metaproject.frl/
+Website: https://language.metaproject.frl
+
+Forum: https://social.metaproject.frl/Meta
+
+Try: https://console.metaproject.frl
 
 Download: https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com
 
@@ -14,7 +18,7 @@ Download: https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC
 ```rebol
 Meta [
     Title: "ASCII Fractal Generator — Mandelbrot, Julia & Burning Ship"
-    File:  ./fractal.meta
+    File:  ./metacc fractal.meta
 ]
 
 ; ─────────────────────────────────────────────────────────
