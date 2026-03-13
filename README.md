@@ -1,8 +1,8 @@
 # meta-lang-examples
 
-Discuss: https://social.metaproject.frl/Meta/
+Website: https://language.metaproject.frl | Forum: https://social.metaproject.frl/Meta/
 
-# Meta **αpε**
+# αpε
 αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html Meta programs compile to an **αpε**
 
 ```rebol
@@ -682,16 +682,11 @@ The compiler client is currently available for web browsers, Windows, Apple MacO
 
 The compiler currently produces programs for web browsers, PC platforms and for Atari 8-bit home computers. Stay tuned for more.
 
-Download:
-`https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com`
+Download: https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com
 
-*nix:
+*nix: `chmod +x run.com ; mv run.com metacc` To Compile: `./metacc program-name.meta` Outputs αpε: `program.com`
 
-`chmod +x run.com ; mv run.com metacc` *Do the equivalent in Windows.*
-
-`./metacc writer.meta`
-
-Outputs executable: `program.com`
+*Do the equivalent in Windows. NOTE: Winblows complains that this is a virus*
 
 # Meta
 
@@ -998,4 +993,4 @@ The compiler currently produces programs for web browsers, PC platforms and for 
 
 https://language.metaproject.frl
 
-#humanfriendly #allerrorsmatter #cod-ape #meta-cod #cod-meta #metalyzed
+#humanfriendly #allerrorsmatter #cod-ape #meta-cod #cod-meta #metalyzed #harekrsna
