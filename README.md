@@ -7,6 +7,492 @@ Discuss: https://social.metaproject.frl/Meta/
 
 In other words Meta compiles to an **αpε**
 
+```rebol
+Meta [
+    Title: "ASCII Fractal Generator — Mandelbrot, Julia & Burning Ship"
+    File:  ./fractal.meta
+]
+
+; ─────────────────────────────────────────────────────────
+;  RENDER SETTINGS
+;  With 60 cols × 30 rows and monospace chars that are
+;  ~2× taller than wide, each "pixel" covers a square
+;  region of the complex plane — so circles look circular.
+; ─────────────────────────────────────────────────────────
+WIDTH=    60
+HEIGHT=   30
+MAX-ITER= 40
+
+; ─────────────────────────────────────────────────────────
+;  PALETTE  (sparse → dense, index 1 = far outside)
+;  In-set pixels are always rendered as "@".
+;  Escaped pixels map: sym-idx = 1 + (iter mod pal-size)
+;  Low iter  (escaped quickly)  → sparse chars → far outside
+;  High iter (escaped slowly)   → dense chars  → near boundary
+; ─────────────────────────────────────────────────────────
+palette: " .`,:;~-=+*xX%#&"
+pal-size: count palette
+
+; ─────────────────────────────────────────────────────────
+;  FLOAT DIMENSION CONSTANTS  (computed once)
+; ─────────────────────────────────────────────────────────
+w-float: to floater! WIDTH
+h-float: to floater! HEIGHT
+w-1:     w-float - 1.0
+h-1:     h-float - 1.0
+
+; ─────────────────────────────────────────────────────────
+;  BANNER
+; ─────────────────────────────────────────────────────────
+write/line ""
+write/line " +----------------------------------------------------------+"
+write/line " |        ~*~  ASCII FRACTAL GENERATOR  ~*~                |"
+write/line " |      Infinite Complexity. One Character at a Time.      |"
+write/line " +----------------------------------------------------------+"
+write/line ""
+write/line "  [1] Mandelbrot Set"
+write/line "      The classic. Zoom into the boundary for infinite detail."
+write/line ""
+write/line "  [2] Julia Set"
+write/line "      Sibling of Mandelbrot. You choose the c parameter."
+write/line "      Built-in presets:"
+write/line "        A = -0.7 + 0.27015i  (connected, sea-horse valley)"
+write/line "        B = -0.4 + 0.6i      (dendrite branches)"
+write/line "        C =  0.285 + 0.01i   (near-symmetric)"
+write/line "        D = -0.7269 + 0.1889i (feathered spirals)"
+write/line "        E =  0.0 + 0.8i      (Douady's rabbit)"
+write/line "        F = custom (you enter real and imaginary parts)"
+write/line ""
+write/line "  [3] Burning Ship"
+write/line "      Like Mandelbrot but uses |Re(z)| and |Im(z)|."
+write/line "      Produces an eerie upside-down galleon shape."
+write/line ""
+write/line "  Palette guide:"
+write/line "    @           = inside the set (never escapes)"
+write/line "    # % & X x   = boundary zone (escapes late)"
+write/line "    + * = ~ - ; = mid-zone"
+write/line "    . ` ,       = far outside (escapes quickly)"
+write/line "    [space]     = very far outside"
+write/line ""
+write/line "  Type 'quit' at any prompt to exit."
+write/line ""
+
+; ─────────────────────────────────────────────────────────
+;  MAIN LOOP
+; ─────────────────────────────────────────────────────────
+forever [
+
+    type-str: ask/line "  Choose fractal [1 / 2 / 3]: "
+    write/line ""
+
+    if any [type-str = "quit"  type-str = "q"  type-str = "exit"] [
+        write/line "  Farewell, explorer of the infinite!"
+        bye
+    ]
+
+    frac-type: to whole! type-str
+
+    if any [frac-type < 1  frac-type > 3] [
+        write/line "  Please enter 1, 2, or 3."
+        continue
+    ]
+
+    ; ─── Default viewport: centre and half-width in ℂ ───
+    ; half-width is the distance from centre to right edge in real units.
+    ; half-height is computed from half-width to give a correct aspect ratio.
+    either frac-type = 1 [
+        def-cx: -0.75   def-cy: 0.0    def-hw: 1.75
+    ][
+    either frac-type = 2 [
+        def-cx:  0.0    def-cy: 0.0    def-hw: 1.5
+    ][
+        ; Burning Ship: shifted slightly to show the 'ship' shape
+        def-cx: -0.4    def-cy: -0.6   def-hw: 2.0
+    ]]
+
+    ; ─── Julia c-parameter ───────────────────────────────
+    jcr: -0.7
+    jci: 0.27015
+
+    if frac-type = 2 [
+        preset-str: ask/line "  Julia preset [A/B/C/D/E/F]: "
+        write/line ""
+
+        either preset-str = "B" [
+            jcr: -0.4   jci: 0.6
+        ][
+        either preset-str = "C" [
+            jcr: 0.285  jci: 0.01
+        ][
+        either preset-str = "D" [
+            jcr: -0.7269  jci: 0.1889
+        ][
+        either preset-str = "E" [
+            jcr: 0.0    jci: 0.8
+        ][
+        either preset-str = "F" [
+            jcr-str: ask/line "  c real part (e.g. -0.7): "
+            write/line ""
+            jci-str: ask/line "  c imag part (e.g. 0.27015): "
+            write/line ""
+            if not is-empty jcr-str [jcr: to floater! jcr-str]
+            if not is-empty jci-str [jci: to floater! jci-str]
+        ][
+            ; Default = preset A — already set above
+        ]]]]]
+    ]
+
+    ; ─── Viewport override (Enter = keep default) ────────
+    cx:    def-cx
+    cy:    def-cy
+    hw:    def-hw
+    zoom:  1.0
+
+    cx-str:   ask/line "  Center real (Enter = default): "
+    write/line ""
+    cy-str:   ask/line "  Center imag (Enter = default): "
+    write/line ""
+    zoom-str: ask/line "  Zoom level  (Enter = 1.0):     "
+    write/line ""
+
+    if not is-empty cx-str   [cx:   to floater! cx-str  ]
+    if not is-empty cy-str   [cy:   to floater! cy-str  ]
+    if not is-empty zoom-str [zoom: to floater! zoom-str]
+
+    ; ─── Compute viewport bounds ──────────────────────────
+    ; Terminal chars are ~2× taller than wide.
+    ; With WIDTH=60 and HEIGHT=30, the pixel grid is 2:1.
+    ; So we set i-half = h-half × (h-float / w-float) × 2.0
+    ; = hw/zoom × (30/60) × 2.0 = hw/zoom × 1.0 = hw/zoom.
+    ; Real and imaginary ranges end up equal, which with the
+    ; 2:1 char ratio gives a visually square complex plane.
+    r-half: hw / zoom
+    i-half: r-half
+
+    r-min:   cx - r-half
+    i-max:   cy + i-half
+    r-range: r-half * 2.0
+    i-range: i-half * 2.0
+
+    r-step: r-range / w-1
+    i-step: i-range / h-1
+
+    ; ─── Info header ─────────────────────────────────────
+    write/line ""
+    write/line " +------------------------------------------------------------+"
+    write "   Fractal  : "
+    either frac-type = 1 [
+        write/line "Mandelbrot Set"
+    ][
+    either frac-type = 2 [
+        write "Julia Set   c = " write jcr write " + " write jci write/line "i"
+    ][
+        write/line "Burning Ship"
+    ]]
+    write "   Center   : " write cx write " + " write cy write/line "i"
+    write "   Half-w   : " write r-half write "  (zoom = " write zoom write/line ")"
+    write "   Res/Iter : " write WIDTH write " x " write HEIGHT write "  /  max " write/line MAX-ITER
+    write/line " +------------------------------------------------------------+"
+    write/line ""
+
+    ; ═══════════════════════════════════════════════════════
+    ;  RENDER  (row-major: top row = i-max, bottom = i-min)
+    ; ═══════════════════════════════════════════════════════
+    for row [1 HEIGHT] [
+
+        ; Map row index to imaginary coordinate
+        row-f: to floater! (row - 1)
+        ci0: i-max - (row-f * i-step)
+
+        line: ""
+
+        for col [1 WIDTH] [
+
+            ; Map column index to real coordinate
+            col-f: to floater! (col - 1)
+            cr0: r-min + (col-f * r-step)
+
+            ; ── Initial z and c depend on fractal type ──────
+            either frac-type = 2 [
+                ; Julia: z starts at the pixel coordinate; c is fixed
+                zr: cr0
+                zi: ci0
+                cr: jcr
+                ci: jci
+            ][
+                ; Mandelbrot / Burning Ship: z starts at 0; c = pixel
+                zr: 0.0
+                zi: 0.0
+                cr: cr0
+                ci: ci0
+            ]
+
+            ; ── Iterate  z → f(z) + c  until |z|² > 4 ──────
+            ;
+            ;  Mandelbrot / Julia:
+            ;      z_{n+1} = z_n² + c
+            ;      Re: zr_new = zr²  - zi²  + Re(c)
+            ;      Im: zi_new = 2·zr·zi      + Im(c)
+            ;
+            ;  Burning Ship (Michelitsch & Rössler, 1992):
+            ;      z_{n+1} = (|Re(z_n)| + i·|Im(z_n)|)² + c
+            ;      Im part: 2·|zr|·|zi| + Im(c)  — note absolute values!
+            ;
+            ; All arithmetic is left-to-right in Meta (no precedence),
+            ; so every non-trivial sub-expression is wrapped in parens.
+
+            iter:     0
+            escaped?: False
+
+            while all [not escaped?   iter < MAX-ITER] [
+
+                zr2: zr * zr
+                zi2: zi * zi
+
+                either (zr2 + zi2) > 4.0 [
+                    escaped?: True
+                ][
+                    either frac-type = 3 [
+                        ; Burning Ship: take absolute values before cross term
+                        abs-zr: either is-negative zr [0.0 - zr][zr]
+                        abs-zi: either is-negative zi [0.0 - zi][zi]
+                        new-zi: (2.0 * abs-zr * abs-zi) + ci
+                    ][
+                        new-zi: (2.0 * zr * zi) + ci
+                    ]
+                    ; Update zr AFTER computing new-zi so we use old zr
+                    zr: (zr2 - zi2) + cr
+                    zi: new-zi
+                    increment iter
+                ]
+            ]
+
+            ; ── Map iteration count → ASCII character ────────
+            either not escaped? [
+                ; Inside the set: anchor character
+                sym: "@"
+            ][
+                ; Outside: low iter = sparse char, high iter = dense char
+                sym-idx: 1 + (modulo iter pal-size)
+                sym: copy cut at palette sym-idx 1
+            ]
+
+            line: join/with line sym
+        ]
+
+        write/line line
+    ]
+
+    write/line ""
+    write/line "  [Done. Enter choices below to render again.]"
+    write/line ""
+]
+```
+
+```rebol
+Meta [
+    Title: "Cosmic Yantra Generator — Enhanced Edition"
+    File:  ./yantra-cosmic.meta
+]
+
+; ----- Reference string for character hashing -----
+reference: " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]_`abcdefghijklmnopqrstuvwxyz{|}~"
+ref-len: count reference
+
+; ----- Symbol set (dense to light, 16 symbols) -----
+; Symbols are ordered from densest to most open, giving a sense of
+; depth: bright/heavy at the centre, fading outward (or vice versa
+; depending on the hash offset).
+art-symbols: "@#8&Oo*X+=-~:,. "
+set-size: count art-symbols
+
+; ----- Limits -----
+MIN-SIZE: 3
+MAX-SIZE: 61
+HASH-MOD: 9973    ; prime — gives good distribution
+
+; =========================================================
+; === Banner ===
+; =========================================================
+write/line ""
+write/line "  +==========================================+"
+write/line "  |  ✦ ✦   COSMIC YANTRA GENERATOR   ✦ ✦   |"
+write/line "  |      Sacred Geometry in ASCII Art        |"
+write/line "  +==========================================+"
+write/line ""
+write/line "  Enter a word as your mantra seed."
+write/line "  The same word always produces the same yantra."
+write/line ""
+write/line "  Pattern modes:"
+write/line "    1 = Diamond  — concentric diamond rings"
+write/line "    2 = Square   — concentric square rings"
+write/line "    3 = Mandala  — blended diamond + square"
+write/line "    4 = Cross    — X-shaped emanation pattern"
+write/line ""
+write/line "  Type 'quit' to exit."
+write/line ""
+
+; =========================================================
+; === Main loop ===
+; =========================================================
+until (False) [
+
+    ; ---- Get mantra seed word ----
+    user-string: ask/line "  Mantra seed: "
+    write/line ""
+
+    if any [
+        user-string = "quit"
+        user-string = "exit"
+        user-string = ""
+    ][
+        write/line ""
+        write/line "  ✦  Om Shanti. May your path be luminous.  ✦"
+        write/line ""
+        bye
+    ]
+
+    ; ---- Polynomial rolling hash (DJB2-inspired) ----
+    ; Better than a simple sum: different orderings of the same
+    ; letters produce different hashes, and character positions matter.
+    hash: 5381
+    len: count user-string
+    for i [1 len] [
+        ch: copy cut at user-string i 1
+        pos: find reference ch
+        if pos [
+            char-val: ref-len - (count pos) + 1
+            hash: modulo (hash * 33 + char-val) HASH-MOD
+        ]
+    ]
+    ; Mix in the word length for extra uniqueness
+    hash: modulo (hash * 17 + len) HASH-MOD
+
+    ; ---- Get size ----
+    size-ok?: False
+    until (
+        size-str: ask/line "  Yantra size (odd 3-61): "
+        write/line ""
+        size: to whole! size-str
+        either all [
+            size >= MIN-SIZE
+            size <= MAX-SIZE
+            is-odd size
+        ][
+            size-ok?: True
+        ][
+            write "  ✗ Need an odd number between "
+            write MIN-SIZE write " and " write/line MAX-SIZE
+        ]
+        size-ok?
+    )[]
+
+    ; ---- Get pattern mode ----
+    mode-ok?: False
+    until (
+        mode-str: ask/line "  Pattern mode (1-4): "
+        write/line ""
+        mode: to whole! mode-str
+        either all [mode >= 1 mode <= 4][
+            mode-ok?: True
+        ][
+            write/line "  ✗ Please choose 1, 2, 3, or 4."
+        ]
+        mode-ok?
+    )[]
+
+    center: (size + 1) / 2
+
+    ; ---- Print yantra info header ----
+    write "  [ Mantra: " write user-string
+    write "  |  Hash: " write hash
+    write "  |  Size: " write size write "x" write size
+    write "  |  Mode: "
+    either mode = 1 [write/line "Diamond ]"][
+    either mode = 2 [write/line "Square ]" ][
+    either mode = 3 [write/line "Mandala ]"][
+                     write/line "Cross ]"  ]]]
+    write/line ""
+
+    ; ---- Build the horizontal border ----
+    ; Width: 2 chars per column + 2 padding + 2 for the '|' walls
+    border: "  +"
+    border-inner: size * 2 + 2
+    for bc [1 border-inner][
+        border: join/with border "-"
+    ]
+    border: join/with border "+"
+
+    write/line border
+
+    ; ---- Draw the yantra ----
+    for row [1 size][
+        line: "  | "
+        for col [1 size][
+
+            abs-row: absolute (row - center)
+            abs-col: absolute (col - center)
+
+            ; Chebyshev distance = max(abs-row, abs-col)
+            ; Used by Square and Mandala modes
+            either abs-row > abs-col [
+                cheby: abs-row
+            ][
+                cheby: abs-col
+            ]
+
+            ; ---- Compute pattern distance ----
+            ;
+            ; Mode 1 — Diamond (Manhattan distance)
+            ;   Gives concentric rotated squares (diamonds).
+            ;   Classic yantra shape.
+            ;
+            ; Mode 2 — Square (Chebyshev distance)
+            ;   Gives concentric axis-aligned squares.
+            ;   Feels like nested frames.
+            ;
+            ; Mode 3 — Mandala (average of Manhattan + Chebyshev)
+            ;   Blends the two: produces something between a diamond
+            ;   and a square — a rounded octagonal feel.
+            ;
+            ; Mode 4 — Cross (abs difference of the two absolutes)
+            ;   distance = |abs-row - abs-col|
+            ;   Is 0 along both diagonals → they share the centre
+            ;   symbol, forming an X-shaped star emanating outward.
+
+            either mode = 1 [
+                distance: abs-row + abs-col
+            ][
+                either mode = 2 [
+                    distance: cheby
+                ][
+                    either mode = 3 [
+                        distance: (abs-row + abs-col + cheby) / 2
+                    ][
+                        distance: absolute (abs-row - abs-col)
+                    ]
+                ]
+            ]
+
+            ; The very centre cell always gets '@' as a focal point
+            either all [abs-row = 0 abs-col = 0][
+                current-symbol: "@"
+            ][
+                symbol-index: 1 + modulo (distance + hash) set-size
+                current-symbol: copy cut at art-symbols symbol-index 1
+            ]
+
+            line: join/with line join/with current-symbol " "
+        ]
+        line: join/with line "|"
+        write/line line
+    ]
+
+    write/line border
+    write/line ""
+]
+````
+
 `writer` supports terminal pasting. Using Terminology I can paste any amount of text and save it with no issues.
 
 ```rebol
