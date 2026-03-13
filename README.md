@@ -3,9 +3,7 @@
 Discuss: https://social.metaproject.frl/Meta/
 
 # Meta **αpε**
-`looper.com` & `writer.com` are αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html
-
-In other words Meta compiles to an **αpε**
+αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html Meta programs compile to an **αpε**
 
 ```rebol
 Meta [
