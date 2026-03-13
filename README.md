@@ -1,6 +1,12 @@
 # meta-lang-examples
 
-Website: https://language.metaproject.frl | Forum: https://social.metaproject.frl/Meta/
+Website: https://language.metaproject.frl |%| Forum: https://social.metaproject.frl/Meta/ |%| Try: https://console.metaproject.frl/
+
+Download: https://language.metaproject.frl/programs/platforms/APE/64-bit/AMD/GCC/portable/command-line/Meta/remote/compiler/run.com
+
+*nix: `chmod +x run.com ; mv run.com metacc` To Compile: `./metacc program-name.meta` Outputs αpε: `program.com`
+
+*Do the equivalent in Windows. NOTE: Winblows complains that this is a virus*
 
 # αpε
 αcτµαlly pδrταblε εxεcµταblε https://justine.lol/ape.html Meta programs compile to an **αpε**
@@ -287,6 +293,8 @@ forever [
 ]
 ```
 
+## ASCII Gen
+
 ```rebol
 Meta [
     Title: "Cosmic Yantra Generator — Enhanced Edition"
@@ -532,9 +540,11 @@ until exit [
 ]
 ```
 
+## Arnold's Example
+
 ```rebol
 Meta [
-	title: "More Examples"
+	title: "Forever loop example"
         purpose: {Original Code from:
              https://arnoldvanhofwegen.com/the/unofficial/meta/examples.html }
 	file: ./looper.meta
@@ -661,17 +671,6 @@ forever [
 
 
 ]	
-```
-Plus they are extremely tiny!
-
-```
-:~$  ps aux | awk '{ print $5" "$6" "$11 }' | sort -nr
-
-3164 2048 /usr/sbin/mcelog
-2540 1792 fusermount3
-528 128 ./looper
-356 0 ./writer
-VSZ RSS COMMAND
 ```
 
 ## Get Compiler Client
