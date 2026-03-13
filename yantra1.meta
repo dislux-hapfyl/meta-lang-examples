@@ -1,0 +1,42 @@
+Meta [
+    Title: "ASCII Yantra Generator for Meditation"
+    File:  ./yantra.meta
+]
+
+; Get input string from user
+user-string: ask/line "Enter a sacred word or syllable (e.g., OM):"
+write/line ""
+
+; Define yantra size (odd number for perfect symmetry)
+size: 23
+
+; Prepare the pattern by repeating the string to fill the space
+pattern: copy user-string
+until (
+    pattern: join/with pattern user-string
+    (count pattern) >= (size * size)
+)[]
+
+; Generate the yantra - a symmetrical, concentric pattern
+write/line "Your Meditation Yantra:"
+write/line ""
+
+for row [1 size] [
+    line: ""
+    for col [1 size] [
+        ; Calculate distance from center for concentric effect
+        center-offset: absolute (row - ((size + 1) / 2)) + absolute (col - ((size + 1) / 2))
+        
+        ; Use the offset to pick a character from our pattern
+        char-index: 1 + (center-offset // (count pattern))
+        current-char: copy cut at pattern char-index 1
+        
+        ; Build the line
+        line: join/with line current-char
+    ]
+    ; Print the completed line
+    write/line line
+]
+
+write/line ""
+write/line "Focus on the center and breathe deeply."

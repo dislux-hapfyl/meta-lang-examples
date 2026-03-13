@@ -1,0 +1,76 @@
+Meta [
+    Title: "Yantra Shell – Infinite ASCII Yantra Generator"
+    File:  ./yantra-shell.meta
+]
+
+; ----- Reference string for character mapping (all printable ASCII) -----
+reference: " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]_`abcdefghijklmnopqrstuvwxyz{|}~"
+ref-len: count reference
+
+; ----- Artistic symbol set (safe characters, no ^ or other escapes) -----
+art-symbols: ".*oO@#&%+=-~|[]$"
+set-size: count art-symbols
+
+if set-size = 0 [
+    write/line "Error: Symbol set is empty!"
+    bye
+]
+
+; ----- Yantra settings -----
+write/line "=== Yantra Shell ==="
+write/line "Enter a word or syllable to generate its yantra."
+write/line "Type 'quit' or press Ctrl+C to exit."
+write/line ""
+
+; ----- Main loop (runs forever) -----
+until (False) [   ; infinite loop
+    ; Get input
+    user-string: ask/line "Your word: "
+    write/line ""
+
+    ; Exit condition
+    if any [
+        user-string = "quit"
+        user-string = "exit"
+        user-string = ""
+    ] [
+        write/line "Goodbye. May your meditation be peaceful."
+        bye
+    ]
+
+    ; ----- Compute hash -----
+    hash: 0
+    len: count user-string
+    for i [1 len] [
+        ch: copy cut at user-string i 1
+        pos: find reference ch
+        if pos [
+            char-index: ref-len - (count pos) + 1
+            hash: hash + char-index
+        ]
+    ]
+    hash: hash + len   ; include length for extra uniqueness
+    write "Hash value: " write/line hash
+
+    ; ----- Generate yantra -----
+    size: 43   ; odd number; you can change this or make it dynamic
+    center: (size + 1) / 2
+
+    write/line "Your Artistic Yantra:"
+    write/line ""
+
+    for row [1 size] [
+        line: ""
+        for col [1 size] [
+            ; Manhattan distance from center
+            distance: absolute (row - center) + absolute (col - center)
+            ; Pick symbol based on distance and hash
+            symbol-index: 1 + ( (distance + hash) // set-size )
+            current-symbol: copy cut at art-symbols symbol-index 1
+            ; Build line with spaces
+            line: join/with line join/with current-symbol " "
+        ]
+        write/line line
+    ]
+    write/line ""
+]

@@ -1,0 +1,201 @@
+Meta [
+    Title: "Cosmic Yantra Generator — Enhanced Edition"
+    File:  ./yantra-cosmic.meta
+]
+
+; ----- Reference string for character hashing -----
+reference: " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]_`abcdefghijklmnopqrstuvwxyz{|}~"
+ref-len: count reference
+
+; ----- Symbol set (dense to light, 16 symbols) -----
+; Symbols are ordered from densest to most open, giving a sense of
+; depth: bright/heavy at the centre, fading outward (or vice versa
+; depending on the hash offset).
+art-symbols: "@#8&Oo*X+=-~:,. "
+set-size: count art-symbols
+
+; ----- Limits -----
+MIN-SIZE: 3
+MAX-SIZE: 61
+HASH-MOD: 9973    ; prime — gives good distribution
+
+; =========================================================
+; === Banner ===
+; =========================================================
+write/line ""
+write/line "  +==========================================+"
+write/line "  |  ✦ ✦   COSMIC YANTRA GENERATOR   ✦ ✦   |"
+write/line "  |      Sacred Geometry in ASCII Art        |"
+write/line "  +==========================================+"
+write/line ""
+write/line "  Enter a word as your mantra seed."
+write/line "  The same word always produces the same yantra."
+write/line ""
+write/line "  Pattern modes:"
+write/line "    1 = Diamond  — concentric diamond rings"
+write/line "    2 = Square   — concentric square rings"
+write/line "    3 = Mandala  — blended diamond + square"
+write/line "    4 = Cross    — X-shaped emanation pattern"
+write/line ""
+write/line "  Type 'quit' to exit."
+write/line ""
+
+; =========================================================
+; === Main loop ===
+; =========================================================
+until (False) [
+
+    ; ---- Get mantra seed word ----
+    user-string: ask/line "  Mantra seed: "
+    write/line ""
+
+    if any [
+        user-string = "quit"
+        user-string = "exit"
+        user-string = ""
+    ][
+        write/line ""
+        write/line "  ✦  Om Shanti. May your path be luminous.  ✦"
+        write/line ""
+        bye
+    ]
+
+    ; ---- Polynomial rolling hash (DJB2-inspired) ----
+    ; Better than a simple sum: different orderings of the same
+    ; letters produce different hashes, and character positions matter.
+    hash: 5381
+    len: count user-string
+    for i [1 len] [
+        ch: copy cut at user-string i 1
+        pos: find reference ch
+        if pos [
+            char-val: ref-len - (count pos) + 1
+            hash: modulo (hash * 33 + char-val) HASH-MOD
+        ]
+    ]
+    ; Mix in the word length for extra uniqueness
+    hash: modulo (hash * 17 + len) HASH-MOD
+
+    ; ---- Get size ----
+    size-ok?: False
+    until (
+        size-str: ask/line "  Yantra size (odd 3-61): "
+        write/line ""
+        size: to whole! size-str
+        either all [
+            size >= MIN-SIZE
+            size <= MAX-SIZE
+            is-odd size
+        ][
+            size-ok?: True
+        ][
+            write "  ✗ Need an odd number between "
+            write MIN-SIZE write " and " write/line MAX-SIZE
+        ]
+        size-ok?
+    )[]
+
+    ; ---- Get pattern mode ----
+    mode-ok?: False
+    until (
+        mode-str: ask/line "  Pattern mode (1-4): "
+        write/line ""
+        mode: to whole! mode-str
+        either all [mode >= 1 mode <= 4][
+            mode-ok?: True
+        ][
+            write/line "  ✗ Please choose 1, 2, 3, or 4."
+        ]
+        mode-ok?
+    )[]
+
+    center: (size + 1) / 2
+
+    ; ---- Print yantra info header ----
+    write "  [ Mantra: " write user-string
+    write "  |  Hash: " write hash
+    write "  |  Size: " write size write "x" write size
+    write "  |  Mode: "
+    either mode = 1 [write/line "Diamond ]"][
+    either mode = 2 [write/line "Square ]" ][
+    either mode = 3 [write/line "Mandala ]"][
+                     write/line "Cross ]"  ]]]
+    write/line ""
+
+    ; ---- Build the horizontal border ----
+    ; Width: 2 chars per column + 2 padding + 2 for the '|' walls
+    border: "  +"
+    border-inner: size * 2 + 2
+    for bc [1 border-inner][
+        border: join/with border "-"
+    ]
+    border: join/with border "+"
+
+    write/line border
+
+    ; ---- Draw the yantra ----
+    for row [1 size][
+        line: "  | "
+        for col [1 size][
+
+            abs-row: absolute (row - center)
+            abs-col: absolute (col - center)
+
+            ; Chebyshev distance = max(abs-row, abs-col)
+            ; Used by Square and Mandala modes
+            either abs-row > abs-col [
+                cheby: abs-row
+            ][
+                cheby: abs-col
+            ]
+
+            ; ---- Compute pattern distance ----
+            ;
+            ; Mode 1 — Diamond (Manhattan distance)
+            ;   Gives concentric rotated squares (diamonds).
+            ;   Classic yantra shape.
+            ;
+            ; Mode 2 — Square (Chebyshev distance)
+            ;   Gives concentric axis-aligned squares.
+            ;   Feels like nested frames.
+            ;
+            ; Mode 3 — Mandala (average of Manhattan + Chebyshev)
+            ;   Blends the two: produces something between a diamond
+            ;   and a square — a rounded octagonal feel.
+            ;
+            ; Mode 4 — Cross (abs difference of the two absolutes)
+            ;   distance = |abs-row - abs-col|
+            ;   Is 0 along both diagonals → they share the centre
+            ;   symbol, forming an X-shaped star emanating outward.
+
+            either mode = 1 [
+                distance: abs-row + abs-col
+            ][
+                either mode = 2 [
+                    distance: cheby
+                ][
+                    either mode = 3 [
+                        distance: (abs-row + abs-col + cheby) / 2
+                    ][
+                        distance: absolute (abs-row - abs-col)
+                    ]
+                ]
+            ]
+
+            ; The very centre cell always gets '@' as a focal point
+            either all [abs-row = 0 abs-col = 0][
+                current-symbol: "@"
+            ][
+                symbol-index: 1 + modulo (distance + hash) set-size
+                current-symbol: copy cut at art-symbols symbol-index 1
+            ]
+
+            line: join/with line join/with current-symbol " "
+        ]
+        line: join/with line "|"
+        write/line line
+    ]
+
+    write/line border
+    write/line ""
+]
